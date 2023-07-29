@@ -30,12 +30,14 @@ const TimerDisplay = ({ parameters }) => {
 
   // START TIMER FUNCTION
 
-  // TIMER ON TIME DISPLAY
-
   useEffect(() => {
+    console.log(timerMode.status);
+    if (timerMode.status == "pause") {
+      console.log("p3");
+      clearInterval(intervalIdRef.current);
+    }
+
     if (timerMode.status == "on") {
-      console.log("timer on");
-      console.log("inside useEffect");
       startTimer(
         intervalIdRef,
         displayRef,
@@ -43,23 +45,12 @@ const TimerDisplay = ({ parameters }) => {
         setDisplayTime,
         trackLength
       );
-      console.log("p2");
-    } else {
-      console.log("timer off");
     }
+
     return () => {
       clearInterval(intervalIdRef.current);
     };
   }, [timerMode.status]);
-
-  // get useRef for interval Id
-  //start timer, with getting latest time start
-  //calculate timeleft seconds
-  // decrease timer
-  // zero condition
-  //clearInterval
-  //put start-stop-reset conditions
-  //after session go for break mode
 
   return (
     <section>

@@ -14,13 +14,17 @@ const StartStop = ({ parameters }) => {
     let btnId = e.currentTarget.id;
     if (btnId == "start_stop") {
       if (timerMode.status == "pause") {
-        setTimerMode({ ...timerMode, status: "on" });
+        setTimerMode(() => {
+          return { ...timerMode, status: "on" };
+        });
       } else {
         setTimerMode({ ...timerMode, status: "pause" });
       }
     }
     if (btnId == "reset") {
-      setTimerMode({ ...timerMode, status: "reset" });
+      setTimerMode(() => {
+        return { ...timerMode, status: "pause" };
+      });
       setTrackLength({
         sessionLength: sessionRef.current,
         breakLength: breakRef.current,
@@ -36,7 +40,7 @@ const StartStop = ({ parameters }) => {
           className=" btn btn-primary w-25 col"
           onClick={handleClick}
         >
-          {timerMode.status === "pause" || timerMode.status === "reset" ? (
+          {timerMode.status === "pause" ? (
             <FontAwesomeIcon icon={faPlay} />
           ) : (
             <FontAwesomeIcon icon={faPause} />

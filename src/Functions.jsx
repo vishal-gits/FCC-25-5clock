@@ -85,17 +85,14 @@ export const startTimer = (
 ) => {
   let timeLeftSeconds = calculateTimeLeft(startTime.sessionLength, currentTime);
 
-  console.log(timeLeftSeconds);
-
-  intervalIdRef = setInterval(() => {
+  intervalIdRef.current = setInterval(() => {
     if (timeLeftSeconds <= 40) {
       clearInterval(intervalIdRef.current);
     } else {
       timeLeftSeconds = timeLeftSeconds - 1;
-      console.log(timeLeftSeconds);
-      console.log(displayTimeLeft(timeLeftSeconds));
+      // console.log(displayTimeLeft(timeLeftSeconds));
       displayRef.current = displayTimeLeft(timeLeftSeconds);
-      console.log(displayRef.current);
+      // console.log(displayRef.current);
       setDisplayTime(() => {
         return {
           ...displayTime,
@@ -103,7 +100,6 @@ export const startTimer = (
           seconds: displayRef.current.seconds,
         };
       });
-      console.log(displayTime);
     }
   }, 1000);
 };
