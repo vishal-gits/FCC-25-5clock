@@ -12,9 +12,7 @@ const StartStop = ({ parameters }) => {
     timerMode,
     setTimerMode,
     setTrackLength,
-    sessionRef,
-    breakRef,
-    resetRef,
+    initialRef,
     displayTime,
     setDisplayTime,
     intervalIdRef,
@@ -36,18 +34,18 @@ const StartStop = ({ parameters }) => {
       clearInterval(intervalIdRef.current);
       displayRef.current = "";
       setTimerMode(() => {
-        return { ...timerMode, status: "pause" };
+        return { ...timerMode, status: "pause", track: "session" };
       });
       setTrackLength({
-        sessionLength: sessionRef.current,
-        breakLength: breakRef.current,
+        sessionLength: initialRef.current.session,
+        breakLength: initialRef.current.break,
       });
 
-      const updateDisplay = (sessionRef) => {
-        let timeLeftSeconds = calculateTimeLeft(sessionRef.current);
+      const updateDisplay = (initialRef) => {
+        let timeLeftSeconds = calculateTimeLeft(initialRef.current.session);
         return displayTimeLeft(timeLeftSeconds);
       };
-      const updateTime = updateDisplay(sessionRef);
+      const updateTime = updateDisplay(initialRef);
 
       setDisplayTime({
         ...displayTime,

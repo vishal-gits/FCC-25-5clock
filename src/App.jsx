@@ -14,13 +14,12 @@ function App() {
     track: "session",
   });
 
-  const sessionRef = useRef(trackLength.sessionLength);
-  const breakRef = useRef(trackLength.breakLength);
+  const initialRef = useRef({
+    session: trackLength.sessionLength,
+    break: trackLength.breakLength,
+  });
   let intervalIdRef = useRef();
   let displayRef = useRef();
-  const resetRef = useRef(false);
-
-  // console.log(sessionRef.current, "&", breakRef.current);
 
   const parameters = {
     trackLength,
@@ -29,9 +28,7 @@ function App() {
     setDisplayTime,
     timerMode,
     setTimerMode,
-    sessionRef,
-    breakRef,
-    resetRef,
+    initialRef,
     intervalIdRef,
     displayRef,
   };

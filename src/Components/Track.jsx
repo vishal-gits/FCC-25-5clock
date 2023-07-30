@@ -3,7 +3,7 @@ import { faArrowUp, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { handleTrackLength } from "../Functions";
 
 const Track = ({ parameters }) => {
-  const { trackLength, setTrackLength } = parameters;
+  const { trackLength, setTrackLength, timerMode } = parameters;
 
   return (
     <section id="session" className="container border border-2 border-dark">
@@ -14,7 +14,9 @@ const Track = ({ parameters }) => {
             <button
               id="break-decrement"
               className="col btn btn-primary w-25"
-              onClick={(event) => handleTrackLength(event, setTrackLength)}
+              onClick={(event) =>
+                handleTrackLength(event, setTrackLength, timerMode)
+              }
             >
               <FontAwesomeIcon icon={faArrowDown} />
             </button>
@@ -27,7 +29,9 @@ const Track = ({ parameters }) => {
             <button
               id="break-increment"
               className="col btn btn-primary w-25"
-              onClick={(event) => handleTrackLength(event, setTrackLength)}
+              onClick={(event) =>
+                handleTrackLength(event, setTrackLength, timerMode)
+              }
             >
               <FontAwesomeIcon icon={faArrowUp} />
             </button>
@@ -40,7 +44,9 @@ const Track = ({ parameters }) => {
             <button
               id="session-decrement"
               className="col btn btn-primary w-25"
-              onClick={(event) => handleTrackLength(event, setTrackLength)}
+              onClick={(event) =>
+                handleTrackLength(event, setTrackLength, timerMode)
+              }
             >
               <FontAwesomeIcon icon={faArrowDown} />
             </button>
@@ -53,7 +59,9 @@ const Track = ({ parameters }) => {
             <button
               id="session-increment"
               className="col btn btn-primary w-25"
-              onClick={(event) => handleTrackLength(event, setTrackLength)}
+              onClick={(event) =>
+                handleTrackLength(event, setTrackLength, timerMode)
+              }
             >
               <FontAwesomeIcon icon={faArrowUp} />
             </button>

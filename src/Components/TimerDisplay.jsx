@@ -7,23 +7,33 @@ const TimerDisplay = ({ parameters }) => {
     setDisplayTime,
     trackLength,
     timerMode,
+    setTimerMode,
     intervalIdRef,
     displayRef,
+    initialRef,
   } = parameters;
 
-  // let intervalIdRef = useRef();
-  // let displayRef = useRef();
+  console.log(intervalIdRef.current);
 
-  //UPDATE TIME DISPLAY FROM SESSION LENGTH
+  if (!displayRef.current && !intervalIdRef.current) {
+    console.log(initialRef.current.session);
+  }
+
+  // UPDATE TIME DISPLAY FROM SESSION LENGTH OR BREAK LENGTH
   const updateDisplay = (trackLength) => {
-    let timeLeftSeconds = calculateTimeLeft(trackLength.sessionLength);
+    let timeLeftSeconds;
+    if (timerMode.track == "session") {
+      timeLeftSeconds = calculateTimeLeft(trackLength.sessionLength);
+    } else if (timerMode.track == "break") {
+      timeLeftSeconds = calculateTimeLeft(trackLength.breakLength);
+    }
+    // let timeLeftSeconds = calculateTimeLeft(trackLength.sessionLength);
     return displayTimeLeft(timeLeftSeconds);
   };
   const updateTime = updateDisplay(trackLength);
 
   useEffect(() => {
-    // if(timerMode.status=='pause'){}
-    // console.log("inside updateTime useEffect");
+    console.log("inside update Timer useEffect");
     setDisplayTime({
       ...displayTime,
       mins: updateTime.mins,
@@ -34,14 +44,17 @@ const TimerDisplay = ({ parameters }) => {
   // START TIMER FUNCTION
 
   useEffect(() => {
-    console.log(timerMode.status);
+    console.log(timerMode);
+    console.log("inside start timer useEffect");
     if (timerMode.status == "pause") {
       clearInterval(intervalIdRef.current);
-      console.log(displayRef.current, displayTime);
     }
 
     if (timerMode.status == "on") {
       startTimer(
+        initialRef,
+        timerMode,
+        setTimerMode,
         intervalIdRef,
         displayRef,
         displayTime,
@@ -53,14 +66,14 @@ const TimerDisplay = ({ parameters }) => {
     return () => {
       clearInterval(intervalIdRef.current);
     };
-  }, [timerMode.status]);
+  }, [timerMode]);
 
   return (
     <section>
       <div>
         <div>
           <p id="timer-label" className="text-center fs-1 p-0 m-0">
-            Session
+            {timerMode.track == "session" ? "Session" : "Break"}
           </p>
           <p id="time-left">
             {displayTime.mins}:{displayTime.seconds}

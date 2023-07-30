@@ -1,43 +1,45 @@
 // SETS TRACKLENGTH
-export const handleTrackLength = (event, setTrackLength) => {
-  let btnId = event.currentTarget.id;
+export const handleTrackLength = (event, setTrackLength, timerMode) => {
+  if (timerMode.status == "pause") {
+    let btnId = event.currentTarget.id;
 
-  if (btnId === "break-decrement") {
-    setTrackLength((prevValue) => {
-      if (prevValue.breakLength > 1) {
-        let newValue = +prevValue.breakLength - 1;
-        return { ...prevValue, breakLength: newValue };
-      } else {
-        return prevValue;
-      }
-    });
-  } else if (btnId === "break-increment") {
-    setTrackLength((prevValue) => {
-      if (prevValue.breakLength < 60) {
-        let newValue = +prevValue.breakLength + 1;
-        return { ...prevValue, breakLength: newValue };
-      } else {
-        return prevValue;
-      }
-    });
-  } else if (btnId === "session-decrement") {
-    setTrackLength((prevValue) => {
-      if (prevValue.sessionLength > 1) {
-        let newValue = +prevValue.sessionLength - 1;
-        return { ...prevValue, sessionLength: newValue };
-      } else {
-        return prevValue;
-      }
-    });
-  } else if (btnId === "session-increment") {
-    setTrackLength((prevValue) => {
-      if (prevValue.sessionLength < 60) {
-        let newValue = +prevValue.sessionLength + 1;
-        return { ...prevValue, sessionLength: newValue };
-      } else {
-        return prevValue;
-      }
-    });
+    if (btnId === "break-decrement") {
+      setTrackLength((prevValue) => {
+        if (prevValue.breakLength > 1) {
+          let newValue = +prevValue.breakLength - 1;
+          return { ...prevValue, breakLength: newValue };
+        } else {
+          return prevValue;
+        }
+      });
+    } else if (btnId === "break-increment") {
+      setTrackLength((prevValue) => {
+        if (prevValue.breakLength < 60) {
+          let newValue = +prevValue.breakLength + 1;
+          return { ...prevValue, breakLength: newValue };
+        } else {
+          return prevValue;
+        }
+      });
+    } else if (btnId === "session-decrement") {
+      setTrackLength((prevValue) => {
+        if (prevValue.sessionLength > 1) {
+          let newValue = +prevValue.sessionLength - 1;
+          return { ...prevValue, sessionLength: newValue };
+        } else {
+          return prevValue;
+        }
+      });
+    } else if (btnId === "session-increment") {
+      setTrackLength((prevValue) => {
+        if (prevValue.sessionLength < 60) {
+          let newValue = +prevValue.sessionLength + 1;
+          return { ...prevValue, sessionLength: newValue };
+        } else {
+          return prevValue;
+        }
+      });
+    }
   }
 };
 
@@ -67,6 +69,9 @@ export const displayTimeLeft = (timeLeftSeconds) => {
 
 //currentDisplayRef --- useRef, which will be equal to the displaytime, once calculated, and will also be utilised for breaking and resuming when it returns
 export const startTimer = (
+  initialRef,
+  timerMode,
+  setTimerMode,
   intervalIdRef,
   displayRef,
   displayTime,
@@ -74,9 +79,21 @@ export const startTimer = (
   startTime
 ) => {
   let timeLeftSeconds;
-  console.log(displayRef.current);
-  // condition for starting after pause
-  if (displayRef.current) {
+  // console.log(displayRef.current);
+
+  // if (!displayRef.current && !intervalIdRef.current) {
+  //   console.log(initialRef.current.session);
+  // }
+
+  //condition for first start-stop click
+  // if (!displayRef.current && !intervalIdRef.current) {
+  //   timeLeftSeconds = calculateTimeLeft(initialRef.current.session);
+  // } else
+  if (displayRef.current && intervalIdRef.current !== "trackCompleted") {
+    // condition for starting after pause
+    // console.log(intervalIdRef.current);
+    // if (intervalIdRef.current !== "trackCompleted") {
+    // console.log("inside-starting after pause");
     if (
       displayRef.current.mins == displayTime.mins &&
       displayRef.current.seconds == displayTime.seconds
@@ -86,19 +103,39 @@ export const startTimer = (
         displayRef.current.seconds
       );
       console.log(timeLeftSeconds);
+    } else {
+      timeLeftSeconds = calculateTimeLeft(
+        displayTime.mins,
+        displayTime.seconds
+      );
+      console.log(timeLeftSeconds);
     }
+    // }
   } else {
-    console.log(startTime.sessionLength);
-    timeLeftSeconds = calculateTimeLeft(startTime.sessionLength);
+    // other than 1st start and pause --- firing
+    console.log(startTime);
+    if (timerMode.track == "session") {
+      console.log("inside session condition");
+      timeLeftSeconds = calculateTimeLeft(startTime.sessionLength);
+    } else if (timerMode.track == "break") {
+      timeLeftSeconds = calculateTimeLeft(startTime.breakLength);
+    }
   }
   console.log(timeLeftSeconds);
   // let timeLeftSeconds = calculateTimeLeft(startTime.sessionLength, currentTime);
 
   intervalIdRef.current = setInterval(() => {
-    if (timeLeftSeconds <= 0) {
+    if (timeLeftSeconds < 0) {
       clearInterval(intervalIdRef.current);
+      console.log("completed");
+      intervalIdRef.current = "trackCompleted";
+      if (timerMode.track == "session") {
+        setTimerMode({ ...timerMode, track: "break" });
+      } else if (timerMode.track == "break") {
+        setTimerMode({ ...timerMode, track: "session" });
+      }
     } else {
-      timeLeftSeconds = timeLeftSeconds - 1;
+      // timeLeftSeconds = timeLeftSeconds - 1;
       // console.log(displayTimeLeft(timeLeftSeconds));
       displayRef.current = displayTimeLeft(timeLeftSeconds);
       // console.log(displayRef.current);
@@ -109,6 +146,8 @@ export const startTimer = (
           seconds: displayRef.current.seconds,
         };
       });
+      timeLeftSeconds = timeLeftSeconds - 1;
+      console.log(displayRef.current, displayTime, intervalIdRef.current);
     }
   }, 1000);
 };
