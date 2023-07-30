@@ -15,9 +15,9 @@ const TimerDisplay = ({ parameters }) => {
 
   console.log(intervalIdRef.current);
 
-  if (!displayRef.current && !intervalIdRef.current) {
-    console.log(initialRef.current.session);
-  }
+  // if (!displayRef.current && !intervalIdRef.current) {
+  //   console.log(initialRef.current.session);
+  // }
 
   // UPDATE TIME DISPLAY FROM SESSION LENGTH OR BREAK LENGTH
   const updateDisplay = (trackLength) => {
