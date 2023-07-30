@@ -1,40 +1,43 @@
 import { useEffect, useState, useRef } from "react";
-import {
-  calculateSeconds,
-  calculateTimeLeft,
-  displayTimeLeft,
-  startTimer,
-} from "../Functions";
+import { calculateTimeLeft, displayTimeLeft, startTimer } from "../Functions";
 
 const TimerDisplay = ({ parameters }) => {
-  const { displayTime, setDisplayTime, trackLength, timerMode } = parameters;
+  const {
+    displayTime,
+    setDisplayTime,
+    trackLength,
+    timerMode,
+    intervalIdRef,
+    displayRef,
+  } = parameters;
 
-  let intervalIdRef = useRef();
-  let displayRef = useRef();
+  // let intervalIdRef = useRef();
+  // let displayRef = useRef();
 
-  //STATIC TIME DISPLAY
-  const staticDisplay = (trackLength) => {
+  //UPDATE TIME DISPLAY FROM SESSION LENGTH
+  const updateDisplay = (trackLength) => {
     let timeLeftSeconds = calculateTimeLeft(trackLength.sessionLength);
     return displayTimeLeft(timeLeftSeconds);
   };
-  const staticTime = staticDisplay(trackLength);
+  const updateTime = updateDisplay(trackLength);
 
   useEffect(() => {
     // if(timerMode.status=='pause'){}
+    // console.log("inside updateTime useEffect");
     setDisplayTime({
       ...displayTime,
-      mins: staticTime.mins,
-      seconds: staticTime.seconds,
+      mins: updateTime.mins,
+      seconds: updateTime.seconds,
     });
-  }, [trackLength.sessionLength]);
+  }, [trackLength.sessionLength, trackLength.breakLength]);
 
   // START TIMER FUNCTION
 
   useEffect(() => {
     console.log(timerMode.status);
     if (timerMode.status == "pause") {
-      console.log("p3");
       clearInterval(intervalIdRef.current);
+      console.log(displayRef.current, displayTime);
     }
 
     if (timerMode.status == "on") {

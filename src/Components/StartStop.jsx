@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { calculateTimeLeft, displayTimeLeft } from "../Functions";
 
 import {
   faPlay,
@@ -7,8 +8,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const StartStop = ({ parameters }) => {
-  const { timerMode, setTimerMode, setTrackLength, sessionRef, breakRef } =
-    parameters;
+  const {
+    timerMode,
+    setTimerMode,
+    setTrackLength,
+    sessionRef,
+    breakRef,
+    resetRef,
+    displayTime,
+    setDisplayTime,
+    intervalIdRef,
+    displayRef,
+  } = parameters;
 
   const handleClick = (e) => {
     let btnId = e.currentTarget.id;
@@ -22,12 +33,26 @@ const StartStop = ({ parameters }) => {
       }
     }
     if (btnId == "reset") {
+      clearInterval(intervalIdRef.current);
+      displayRef.current = "";
       setTimerMode(() => {
         return { ...timerMode, status: "pause" };
       });
       setTrackLength({
         sessionLength: sessionRef.current,
         breakLength: breakRef.current,
+      });
+
+      const updateDisplay = (sessionRef) => {
+        let timeLeftSeconds = calculateTimeLeft(sessionRef.current);
+        return displayTimeLeft(timeLeftSeconds);
+      };
+      const updateTime = updateDisplay(sessionRef);
+
+      setDisplayTime({
+        ...displayTime,
+        mins: updateTime.mins,
+        seconds: updateTime.seconds,
       });
     }
   };

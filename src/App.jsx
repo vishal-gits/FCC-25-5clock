@@ -5,8 +5,8 @@ import TimerDisplay from "./Components/TimerDisplay";
 
 function App() {
   const [trackLength, setTrackLength] = useState({
-    sessionLength: "1",
-    breakLength: "1",
+    sessionLength: "25",
+    breakLength: "5",
   });
   const [displayTime, setDisplayTime] = useState({ mins: "", seconds: "" });
   const [timerMode, setTimerMode] = useState({
@@ -16,6 +16,9 @@ function App() {
 
   const sessionRef = useRef(trackLength.sessionLength);
   const breakRef = useRef(trackLength.breakLength);
+  let intervalIdRef = useRef();
+  let displayRef = useRef();
+  const resetRef = useRef(false);
 
   // console.log(sessionRef.current, "&", breakRef.current);
 
@@ -28,6 +31,9 @@ function App() {
     setTimerMode,
     sessionRef,
     breakRef,
+    resetRef,
+    intervalIdRef,
+    displayRef,
   };
 
   return (

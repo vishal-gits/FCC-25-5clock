@@ -47,19 +47,10 @@ export const handleTrackLength = (event, setTrackLength) => {
 //3.Update Timer Function set interval timer function , using both the above functions
 //4. set initial state of display time
 
-// TOTAL SECONDS--To calculate total seconds in a given mins, seconds combination
-export const calculateSeconds = (mins = 0, seconds = 0) => {
-  return mins * 60 + seconds;
-};
-
 // TIMELEFT - To calculate total timeLeft based on startTime and currentTime in seconds
-export const calculateTimeLeft = (startTime, currentTime = 0) => {
+export const calculateTimeLeft = (mins = 0, seconds = 0) => {
   //both startTime and currentTime in seconds
-  let startTimeSeconds = calculateSeconds(startTime);
-  let currentTimeSeconds = calculateSeconds(currentTime);
-
-  let timeLeftSeconds = startTimeSeconds - currentTimeSeconds;
-
+  let timeLeftSeconds = Number(mins) * 60 + Number(seconds);
   return timeLeftSeconds;
 };
 
@@ -80,13 +71,31 @@ export const startTimer = (
   displayRef,
   displayTime,
   setDisplayTime,
-  startTime,
-  currentTime = 0
+  startTime
 ) => {
-  let timeLeftSeconds = calculateTimeLeft(startTime.sessionLength, currentTime);
+  let timeLeftSeconds;
+  console.log(displayRef.current);
+  // condition for starting after pause
+  if (displayRef.current) {
+    if (
+      displayRef.current.mins == displayTime.mins &&
+      displayRef.current.seconds == displayTime.seconds
+    ) {
+      timeLeftSeconds = calculateTimeLeft(
+        displayRef.current.mins,
+        displayRef.current.seconds
+      );
+      console.log(timeLeftSeconds);
+    }
+  } else {
+    console.log(startTime.sessionLength);
+    timeLeftSeconds = calculateTimeLeft(startTime.sessionLength);
+  }
+  console.log(timeLeftSeconds);
+  // let timeLeftSeconds = calculateTimeLeft(startTime.sessionLength, currentTime);
 
   intervalIdRef.current = setInterval(() => {
-    if (timeLeftSeconds <= 40) {
+    if (timeLeftSeconds <= 0) {
       clearInterval(intervalIdRef.current);
     } else {
       timeLeftSeconds = timeLeftSeconds - 1;
