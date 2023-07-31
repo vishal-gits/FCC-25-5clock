@@ -121,9 +121,14 @@ export const startTimer = (
       timeLeftSeconds = calculateTimeLeft(startTime.breakLength);
     }
   }
+
+  if (intervalIdRef.current == "trackCompleted") {
+    timeLeftSeconds = timeLeftSeconds + 1;
+  }
+
   console.log(timeLeftSeconds);
   // let timeLeftSeconds = calculateTimeLeft(startTime.sessionLength, currentTime);
-
+  let counter = 0;
   intervalIdRef.current = setInterval(() => {
     if (timeLeftSeconds < 0) {
       clearInterval(intervalIdRef.current);
@@ -135,7 +140,9 @@ export const startTimer = (
         setTimerMode({ ...timerMode, track: "session" });
       }
     } else {
-      // timeLeftSeconds = timeLeftSeconds - 1;
+      if (counter == 0) {
+        timeLeftSeconds = timeLeftSeconds - 1;
+      }
       // console.log(displayTimeLeft(timeLeftSeconds));
       displayRef.current = displayTimeLeft(timeLeftSeconds);
       // console.log(displayRef.current);
@@ -147,6 +154,7 @@ export const startTimer = (
         };
       });
       timeLeftSeconds = timeLeftSeconds - 1;
+      counter = counter + 1;
       console.log(displayRef.current, displayTime, intervalIdRef.current);
     }
   }, 1000);
