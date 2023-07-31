@@ -44,7 +44,7 @@ function App() {
         id="inner"
         className="container d-flex flex-column align-items-center justify-content-around"
       >
-        <h1 className="display-3 text-center">25 + 5 Clock</h1>
+        <h1 className="text-center fontColor">25 + 5 Clock</h1>
         <Track parameters={parameters} />
         <TimerDisplay parameters={parameters} />
         <StartStop parameters={parameters} />

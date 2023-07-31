@@ -64,7 +64,7 @@ const StartStop = ({ parameters }) => {
       <div className="row row-cols-3 justify-content-evenly">
         <button
           id="start_stop"
-          className=" btn btn-primary w-25 col"
+          className=" w-25 custombg col"
           onClick={handleClick}
         >
           {timerMode.status === "pause" ? (
@@ -74,11 +74,7 @@ const StartStop = ({ parameters }) => {
           )}
         </button>
 
-        <button
-          id="reset"
-          className=" btn btn-primary w-25 col"
-          onClick={handleClick}
-        >
+        <button id="reset" className=" w-25 custombg col" onClick={handleClick}>
           <FontAwesomeIcon icon={faArrowsRotate} />
         </button>
       </div>

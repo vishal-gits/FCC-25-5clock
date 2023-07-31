@@ -6,29 +6,26 @@ const Track = ({ parameters }) => {
   const { trackLength, setTrackLength, timerMode } = parameters;
 
   return (
-    <section id="session" className="container border border-2 border-dark">
+    <section id="session" className="container">
       <div className="row row-cols-2">
-        <div className="col text-center" id="break-label">
+        <div className="col text-center fs-3 fontColor" id="break-label">
           Break Length
-          <div className="row row-cols-3 justify-content-around align-items-center border border-2 border-dark">
+          <div className="row row-cols-3 justify-content-around align-items-center ">
             <button
               id="break-decrement"
-              className="col btn btn-primary w-25"
+              className="col w-25 custombg"
               onClick={(event) =>
                 handleTrackLength(event, setTrackLength, timerMode)
               }
             >
               <FontAwesomeIcon icon={faArrowDown} />
             </button>
-            <span
-              id="break-length"
-              className="fs-4 border border-2 border-dark"
-            >
+            <span id="break-length" className="fs-4 w-25 custombg">
               {trackLength.breakLength}
             </span>
             <button
               id="break-increment"
-              className="col btn btn-primary w-25"
+              className="col w-25 custombg"
               onClick={(event) =>
                 handleTrackLength(event, setTrackLength, timerMode)
               }
@@ -38,27 +35,24 @@ const Track = ({ parameters }) => {
           </div>
         </div>
 
-        <div className="col text-center" id="session-label">
+        <div className="col text-center fs-3 fontColor" id="session-label">
           Session Length
-          <div className="row row-cols-3 justify-content-around align-items-center border border-2 border-dark">
+          <div className="row row-cols-3 justify-content-around align-items-center ">
             <button
               id="session-decrement"
-              className="col btn btn-primary w-25"
+              className="col w-25 custombg"
               onClick={(event) =>
                 handleTrackLength(event, setTrackLength, timerMode)
               }
             >
               <FontAwesomeIcon icon={faArrowDown} />
             </button>
-            <span
-              id="session-length"
-              className="fs-4 border border-2 border-dark"
-            >
+            <span id="session-length" className="fs-4 w-25 custombg">
               {trackLength.sessionLength}
             </span>
             <button
               id="session-increment"
-              className="col btn btn-primary w-25"
+              className="col w-25 custombg"
               onClick={(event) =>
                 handleTrackLength(event, setTrackLength, timerMode)
               }

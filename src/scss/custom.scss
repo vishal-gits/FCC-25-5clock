@@ -2,21 +2,41 @@
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
+
+.fontColor {
+  color: purple;
+}
+
 #outer {
   min-height: 100vh;
-  border: 10px solid black;
+  border: 10px solid purple;
   padding: 0px;
   margin: 0px;
-  background-color: aqua;
+  background-color: purple;
 }
 #inner {
-  height: 70vh;
+  height: 80vh;
   width: 600px;
-  border: 5px solid black;
+  border: 5px solid purple;
+  border-radius: 5rem;
+  background-color: aqua;
+  padding: 3rem 2rem;
 }
 
 #time-left {
-  font-size: 100px;
+  font-size: 120px;
+}
+
+.custombg {
+  background-color: purple;
+  color: aqua;
+  // border-color: yellow;
+  border-radius: 1rem;
+}
+
+#reset,
+#start_stop {
+  padding: 0.5rem 1rem;
 }
 
 @import "../../node_modules/bootstrap/scss/bootstrap.scss";

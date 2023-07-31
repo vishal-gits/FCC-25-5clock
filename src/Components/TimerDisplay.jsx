@@ -14,7 +14,7 @@ const TimerDisplay = ({ parameters }) => {
     audioRef,
   } = parameters;
 
-  console.log(intervalIdRef.current);
+  // console.log(intervalIdRef.current);
 
   // if (!displayRef.current && !intervalIdRef.current) {
   //   console.log(initialRef.current.session);
@@ -34,7 +34,7 @@ const TimerDisplay = ({ parameters }) => {
   const updateTime = updateDisplay(trackLength);
 
   useEffect(() => {
-    console.log("inside update Timer useEffect");
+    // console.log("inside update Timer useEffect");
     setDisplayTime({
       ...displayTime,
       mins: updateTime.mins,
@@ -45,8 +45,8 @@ const TimerDisplay = ({ parameters }) => {
   // START TIMER FUNCTION
 
   useEffect(() => {
-    console.log(timerMode);
-    console.log("inside start timer useEffect");
+    // console.log(timerMode);
+    // console.log("inside start timer useEffect");
     if (timerMode.status == "pause") {
       clearInterval(intervalIdRef.current);
     }
@@ -74,10 +74,13 @@ const TimerDisplay = ({ parameters }) => {
     <section>
       <div>
         <div>
-          <p id="timer-label" className="text-center fs-1 p-0 m-0">
+          <p
+            id="timer-label"
+            className="text-center fs-1 p-0 m-0 mt-3 fontColor"
+          >
             {timerMode.track == "session" ? "Session" : "Break"}
           </p>
-          <p id="time-left">
+          <p id="time-left" className="fontColor">
             {displayTime.mins}:{displayTime.seconds}
             <audio
               id="beep"

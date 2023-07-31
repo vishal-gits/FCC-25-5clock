@@ -80,7 +80,7 @@ export const startTimer = (
   startTime
 ) => {
   if (intervalIdRef.current == "trackCompleted") {
-    console.log("audio starts");
+    // console.log("audio starts");
     audioRef.current.play();
   }
 
@@ -108,20 +108,20 @@ export const startTimer = (
         displayRef.current.mins,
         displayRef.current.seconds
       );
-      console.log(timeLeftSeconds);
+      // console.log(timeLeftSeconds);
     } else {
       timeLeftSeconds = calculateTimeLeft(
         displayTime.mins,
         displayTime.seconds
       );
-      console.log(timeLeftSeconds);
+      // console.log(timeLeftSeconds);
     }
     // }
   } else {
     // other than 1st start and pause --- firing
-    console.log(startTime);
+    // console.log(startTime);
     if (timerMode.track == "session") {
-      console.log("inside session condition");
+      // console.log("inside session condition");
       timeLeftSeconds = calculateTimeLeft(startTime.sessionLength);
     } else if (timerMode.track == "break") {
       timeLeftSeconds = calculateTimeLeft(startTime.breakLength);
@@ -132,13 +132,13 @@ export const startTimer = (
     timeLeftSeconds = timeLeftSeconds + 1;
   }
 
-  console.log(timeLeftSeconds);
+  // console.log(timeLeftSeconds);
   // let timeLeftSeconds = calculateTimeLeft(startTime.sessionLength, currentTime);
   let counter = 0;
   intervalIdRef.current = setInterval(() => {
     if (timeLeftSeconds < 0) {
       clearInterval(intervalIdRef.current);
-      console.log("completed");
+      // console.log("completed");
       intervalIdRef.current = "trackCompleted";
       if (timerMode.track == "session") {
         setTimerMode({ ...timerMode, track: "break" });
@@ -161,7 +161,7 @@ export const startTimer = (
       });
       timeLeftSeconds = timeLeftSeconds - 1;
       counter = counter + 1;
-      console.log(displayRef.current, displayTime, intervalIdRef.current);
+      // console.log(displayRef.current, displayTime, intervalIdRef.current);
     }
   }, 1000);
 };
