@@ -11,6 +11,7 @@ const TimerDisplay = ({ parameters }) => {
     intervalIdRef,
     displayRef,
     initialRef,
+    audioRef,
   } = parameters;
 
   console.log(intervalIdRef.current);
@@ -52,6 +53,7 @@ const TimerDisplay = ({ parameters }) => {
 
     if (timerMode.status == "on") {
       startTimer(
+        audioRef,
         initialRef,
         timerMode,
         setTimerMode,
@@ -77,6 +79,12 @@ const TimerDisplay = ({ parameters }) => {
           </p>
           <p id="time-left">
             {displayTime.mins}:{displayTime.seconds}
+            <audio
+              id="beep"
+              src="/clock-alarm.mp3"
+              type="audio/mp3"
+              ref={audioRef}
+            ></audio>
           </p>
         </div>
       </div>

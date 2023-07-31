@@ -69,6 +69,7 @@ export const displayTimeLeft = (timeLeftSeconds) => {
 
 //currentDisplayRef --- useRef, which will be equal to the displaytime, once calculated, and will also be utilised for breaking and resuming when it returns
 export const startTimer = (
+  audioRef,
   initialRef,
   timerMode,
   setTimerMode,
@@ -78,6 +79,11 @@ export const startTimer = (
   setDisplayTime,
   startTime
 ) => {
+  if (intervalIdRef.current == "trackCompleted") {
+    console.log("audio starts");
+    audioRef.current.play();
+  }
+
   let timeLeftSeconds;
   // console.log(displayRef.current);
 
@@ -121,7 +127,7 @@ export const startTimer = (
       timeLeftSeconds = calculateTimeLeft(startTime.breakLength);
     }
   }
-
+  // required to start new interval , not skipping the first count
   if (intervalIdRef.current == "trackCompleted") {
     timeLeftSeconds = timeLeftSeconds + 1;
   }

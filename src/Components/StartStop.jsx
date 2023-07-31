@@ -17,6 +17,7 @@ const StartStop = ({ parameters }) => {
     setDisplayTime,
     intervalIdRef,
     displayRef,
+    audioRef,
   } = parameters;
 
   const handleClick = (e) => {
@@ -52,6 +53,9 @@ const StartStop = ({ parameters }) => {
         mins: updateTime.mins,
         seconds: updateTime.seconds,
       });
+
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
     }
   };
 

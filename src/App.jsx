@@ -20,6 +20,7 @@ function App() {
   });
   let intervalIdRef = useRef();
   let displayRef = useRef();
+  let audioRef = useRef(null);
 
   const parameters = {
     trackLength,
@@ -31,6 +32,7 @@ function App() {
     initialRef,
     intervalIdRef,
     displayRef,
+    audioRef,
   };
 
   return (
