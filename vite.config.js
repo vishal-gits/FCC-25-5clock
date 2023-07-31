@@ -4,5 +4,6 @@ import macrosPlugin from "vite-plugin-babel-macros";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "FCC-25-5clock",
   plugins: [react(), macrosPlugin],
 });
